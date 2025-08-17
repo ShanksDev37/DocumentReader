@@ -1,0 +1,4 @@
+﻿This is a sample text document.
+It contains multiple lines of text.
+Some words may repeat: text, sample, document.
+Word count and analysis should be performed.

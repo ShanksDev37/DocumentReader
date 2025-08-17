@@ -1,0 +1,5 @@
+C:\Users\dwarf\Desktop\Programming\DocumentReader\Build\V01\DocumentReader.exe
+C:\Users\dwarf\Desktop\Programming\DocumentReader\Build\V01\DocumentReader.dll
+C:\Users\dwarf\Desktop\Programming\DocumentReader\Build\V01\DocumentReader.deps.json
+C:\Users\dwarf\Desktop\Programming\DocumentReader\Build\V01\DocumentReader.runtimeconfig.json
+C:\Users\dwarf\Desktop\Programming\DocumentReader\Build\V01\DocumentReader.pdb
