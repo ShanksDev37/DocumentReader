@@ -52,7 +52,7 @@
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\dwarf\\Desktop\\Programming\\DocumentReader\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAAC0AAAAwAAAAAAAAAA==",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAA8AAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-16T06:25:30.257Z",
               "EditorCaption": ""
@@ -67,8 +67,7 @@
               "RelativeToolTip": "Components\\CreateOutputFile.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-16T12:37:09.097Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-16T12:37:09.097Z"
             },
             {
               "$type": "Document",
@@ -80,8 +79,7 @@
               "RelativeToolTip": "Components\\TextDocumentProcessor.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-16T06:35:08.935Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-16T06:35:08.935Z"
             },
             {
               "$type": "Document",
@@ -93,8 +91,7 @@
               "RelativeToolTip": "Components\\DocumentProcessorBase.cs",
               "ViewState": "AgIAAAsAAAAAAAAAAAAcwBAAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-16T07:16:06.317Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-16T07:16:06.317Z"
             },
             {
               "$type": "Document",
