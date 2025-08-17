@@ -1,0 +1,13 @@
+Total Lines: (4
+Total Words: (26)
+Total Unique Words: (22)
+Total Character Count: (156)
+
+Total entries: (3) Total Percentage: (11.538%) Unique Word Count: (2) Unique Word Percentage (9.091%)
+ (text)
+
+Total entries: (2) Total Percentage: (7.692%) Unique Word Count: (3) Unique Word Percentage (13.636%)
+ (sample) (document)
+
+Total entries: (Once) Total Percentage: (3.846%) Unique Word Count: (20) Unique Word Percentage (90.909%)
+ (this) (is) (a) (it) (contains) (multiple) (lines) (of) (some) (words) (may) (repeat) (word) (count) (and) (analysis) (should) (be) (performed)

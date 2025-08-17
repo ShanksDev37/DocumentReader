@@ -54,7 +54,7 @@ namespace ConsoleInfo
         /// // Output: "Error: Connection failed at 12/25/2024 10:30:15 AM"
         /// </code>
         /// </example>
-        public void LogMessage ( MessageType type, string message )
+        public void LogMessage(MessageType type, string message)
         {
             try
             {

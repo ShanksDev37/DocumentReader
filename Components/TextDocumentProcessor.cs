@@ -4,130 +4,190 @@ using DocumentReader.Utils;
 namespace DocumentReader.Components
 {
     /// <summary>
-    /// Outlined success criteria:
-    /// Word count analysis.
-    /// Most frequent words.
-    /// Character statistics.
-    /// Line Count
+    /// Processes text files to analyze word frequency, character counts, and generate statistical reports.
+    /// Uses asynchronous processing for improved performance on large datasets.
+    /// Inherits from DocumentProcessorBase for file validation functionality.
     /// </summary>
     public class TextDocumentProcessor : DocumentProcessorBase
     {
+        /// <summary>
+        /// Dictionary storing word frequency groups where key is occurrence count and value is formatted word list.
+        /// </summary>
+        private Dictionary<int, string> wordDictionary = new();
+
+        /// <summary>
+        /// Total count of unique words found in the processed text.
+        /// </summary>
+        private int totalUnique;
+
+        /// <summary>
+        /// Main processing method that validates, analyzes, and generates a statistical report for text files.
+        /// Creates an output file with word frequency analysis and document statistics in a dedicated folder.
+        /// </summary>
+        /// <param name="filePath">Directory path containing the file</param>
+        /// <param name="fileName">Name of the file to process</param>
         public async Task ProcessData(string filePath, string fileName)
         {
             var log = LogUtility.Current;
             log.LogMessage(LogUtility.MessageType.Log, "Validating data.");
 
-            if (ValidateData(filePath, fileName, out var validatedFile) == false)
-            {
+            // Validate file exists and is supported format
+            if (ValidateData(filePath, fileName, out var validFile) == false)
                 return;
-            }
 
-            log.LogMessage(LogUtility.MessageType.Log, "Validation successful.");
-
-            if (validatedFile == null)
+            if (validFile == null)
             {
+                log.LogMessage(LogUtility.MessageType.Error, "Data has become null.");
                 return;
             }
 
             log.LogMessage(LogUtility.MessageType.Log, "Started processing data.");
 
-            var characterCount = StringFormatter.CharacterCount(validatedFile);
-            var processedText = await StringFormatter.ProcessStringArray(validatedFile);
-            if (processedText == null)
+            // Get character count from original file (excluding line endings)
+            var totalCharacters = StringFormatter.CharacterCount(validFile);
+
+            // Clean and format text (remove special chars, normalize spacing, convert to lowercase)
+            var cleanedFile = await StringFormatter.ProcessStringArray(validFile);
+            if (cleanedFile == null)
             {
+                log.LogMessage(LogUtility.MessageType.Error, "Processed Text has become null.");
                 return;
             }
 
-            var wordCount = StringFormatter.WordCount(processedText, out var words);
+            // Count total words and get word array for analysis
+            var totalWords = StringFormatter.WordCount(cleanedFile, out var wordCollection);
 
             log.LogMessage(LogUtility.MessageType.Log, "Processing common words.");
             List<string> output = new();
-            var commonWords = ProcessCommonWords(words, out var uniqueWords);
+
+            // Process word frequency analysis asynchronously and populate wordDictionary
+            await ProcessCommonWords(wordCollection);
+            var commonWords = wordDictionary;
             if (commonWords == null)
             {
+                log.LogMessage(LogUtility.MessageType.Error, "Common words has become null.");
                 return;
             }
 
             log.LogMessage(LogUtility.MessageType.Log, "Common words successfully processed.");
             log.LogMessage(LogUtility.MessageType.Log, "building save file.");
 
-            //Process base lines synchronously.
-            output.Add($"Total Lines: ({validatedFile.Length}");
-            output.Add($"Total Words: ({wordCount})");
-            output.Add($"Total Unique Words: ({uniqueWords})");
-            output.Add($"Total Character Count: ({characterCount})");
+            // Build summary statistics section
+            output.Add($"Total Lines: ({validFile.Length}");
+            output.Add($"Total Words: ({totalWords})");
+            output.Add($"Total Unique Words: ({totalUnique})");
+            output.Add($"Total Character Count: ({totalCharacters})");
 
+            // Generate detailed word frequency report with percentages
             string combinedEntry = new("");
             foreach (var entry in commonWords)
             {
-                var percentageValue = (float)entry.Key / wordCount * 100;
+                // Calculate percentage of total words for this frequency group
+                var percentageValue = (float)entry.Key / totalWords * 100;
                 var formattedPercentageValue = percentageValue < 0.001f ? "<0.001%" : $"{percentageValue.ToString("#0.000")}%";
                 var formattedTitle = entry.Key == 1 ? $"Once" : $"{entry.Key}";
 
+                // Calculate percentage of unique words in this frequency group
                 var entryUniqueWords = StringFormatter.WordCount(entry.Value, out _);
-                var uniquePercentageValue = (float)entryUniqueWords / uniqueWords * 100;
+                var uniquePercentageValue = (float)entryUniqueWords / totalUnique * 100;
                 var formattedUniquePercentage = uniquePercentageValue < 0.001f ? "<0.001%" : $"{uniquePercentageValue.ToString("#0.000")}%";
 
+                // Format frequency group header with statistics
                 combinedEntry += $"\nTotal entries: ({formattedTitle}) Total Percentage: ({formattedPercentageValue}) " +
                     $"Unique Word Count: ({entryUniqueWords}) Unique Word Percentage ({formattedUniquePercentage})\n";
 
+                // Add formatted list of words that appear this many times
                 combinedEntry += entry.Value;
                 output.Add(combinedEntry);
 
                 combinedEntry = "";
             }
 
-            await CreateOutputFile.CreateFile(filePath, fileName, output.ToArray());
+            // Save results to "Edited" folder with "New-" prefix
+            await CreateOutputFile.CreateFile(filePath, "Edited", "New-", fileName, output.ToArray());
 
             log.LogMessage(LogUtility.MessageType.Log, "successfully processed data.");
             return;
         }
 
-        public Dictionary<int, string>? ProcessCommonWords(string[]? input, out int outputUnique)
+        /// <summary>
+        /// Asynchronously processes word frequency analysis using parallel tasks.
+        /// Groups words by their occurrence count and populates the wordDictionary field.
+        /// Uses Task.WhenAll for concurrent processing of different frequency groups.
+        /// </summary>
+        /// <param name="input">Array of words to analyze for frequency patterns</param>
+        public async Task ProcessCommonWords(string[]? input)
         {
-            outputUnique = 0;
-
+            totalUnique = 0;
             if (input == null || input.Length < 0)
             {
-                return null;
+                return;
             }
 
+            // Group words by frequency and sort by count (descending order)
             var keyPair = input.ToList().GroupBy(x => x).Select(y => new { Word = y.Key, Count = y.Count() });
             keyPair = keyPair.OrderByDescending(x => x.Count).Take(input.Length);
             var wordArray = keyPair.ToArray();
 
-            outputUnique = wordArray.Length;
+            totalUnique = wordArray.Length;
 
-            var keyConversion = new Dictionary<string, int>();
+            // Convert to dictionary for efficient word-to-count lookup
+            Dictionary<string, int> keyConversion = new();
             foreach (var value in wordArray)
             {
                 keyConversion.Add(value.Word, value.Count);
             }
 
-            string entries = new("");
-            var wordDictionary = new Dictionary<int, string>();
+            // Get unique frequency values to avoid duplicate processing
+            List<int> groupedEntries = new();
             foreach (var value in keyConversion.Values)
             {
-                entries = "";
-
-                foreach (var key in wordArray)
-                {
-                    if (key.Count < value)
-                        break;
-
-                    if (key.Count != value)
-                        continue;
-
-                    entries += $" ({key.Word})";
-                }
-
-                if (wordDictionary.ContainsKey(value))
+                if (groupedEntries.Contains(value))
                     continue;
 
-                wordDictionary.Add(value, entries.Trim());
+                groupedEntries.Add(value);
             }
 
-            return wordDictionary;
+            // Create parallel tasks for processing each frequency group
+            List<Task> tasks = new();
+            foreach (var value in groupedEntries)
+            {
+                Task task = GetWords(keyConversion, value);
+                tasks.Add(task);
+                Task.Run(() => task);
+            }
+
+            // Wait for all frequency group processing to complete
+            await Task.WhenAll(tasks);
+        }
+
+        /// <summary>
+        /// Helper method that finds all words with a specific occurrence count and formats them.
+        /// Adds the formatted word list to the wordDictionary with the frequency as the key.
+        /// </summary>
+        /// <param name="input">Dictionary mapping words to their occurrence counts</param>
+        /// <param name="value">Target frequency count to filter words by</param>
+        /// <returns>Completed task for async processing</returns>
+        private Task GetWords(Dictionary<string, int> input, int value)
+        {
+            string entries = new("");
+
+            // Find all words that appear exactly 'value' times
+            foreach (var word in input)
+            {
+                if (word.Value < value)
+                    break;
+
+                if (word.Value != value)
+                    continue;
+
+                // Format each word in parentheses
+                entries += $" ({word.Key})";
+            }
+
+            // Store formatted word list in dictionary with frequency as key
+            wordDictionary.Add(value, entries);
+            return Task.CompletedTask;
         }
     }
 }
