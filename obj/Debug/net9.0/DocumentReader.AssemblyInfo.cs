@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DocumentReader")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ed04d793c5d793fc777e49a62e13b3de429378e7")]
 [assembly: System.Reflection.AssemblyProductAttribute("DocumentReader")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DocumentReader")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

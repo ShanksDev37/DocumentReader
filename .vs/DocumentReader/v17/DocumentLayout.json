@@ -1,25 +1,29 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\dwarf\\Desktop\\Programming\\Git\\",
+  "WorkspaceRootPath": "C:\\Users\\dwarf\\Desktop\\Programming\\DocumentReader\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{268FFFB4-EB1C-4D81-B7D6-B65ED9954A1D}|DocumentReader.csproj|c:\\users\\dwarf\\desktop\\programming\\git\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{268FFFB4-EB1C-4D81-B7D6-B65ED9954A1D}|DocumentReader.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{268FFFB4-EB1C-4D81-B7D6-B65ED9954A1D}|DocumentReader.csproj|c:\\users\\dwarf\\desktop\\programming\\documentreader\\utils\\logutility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{268FFFB4-EB1C-4D81-B7D6-B65ED9954A1D}|DocumentReader.csproj|solutionrelative:utils\\logutility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{268FFFB4-EB1C-4D81-B7D6-B65ED9954A1D}|DocumentReader.csproj|c:\\users\\dwarf\\desktop\\programming\\git\\components\\documentprocessorbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{268FFFB4-EB1C-4D81-B7D6-B65ED9954A1D}|DocumentReader.csproj|solutionrelative:components\\documentprocessorbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{268FFFB4-EB1C-4D81-B7D6-B65ED9954A1D}|DocumentReader.csproj|c:\\users\\dwarf\\desktop\\programming\\git\\components\\textdocumentprocessor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{268FFFB4-EB1C-4D81-B7D6-B65ED9954A1D}|DocumentReader.csproj|c:\\users\\dwarf\\desktop\\programming\\documentreader\\components\\textdocumentprocessor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{268FFFB4-EB1C-4D81-B7D6-B65ED9954A1D}|DocumentReader.csproj|solutionrelative:components\\textdocumentprocessor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{268FFFB4-EB1C-4D81-B7D6-B65ED9954A1D}|DocumentReader.csproj|c:\\users\\dwarf\\desktop\\programming\\git\\components\\createoutputfile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{268FFFB4-EB1C-4D81-B7D6-B65ED9954A1D}|DocumentReader.csproj|c:\\users\\dwarf\\desktop\\programming\\documentreader\\components\\createoutputfile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{268FFFB4-EB1C-4D81-B7D6-B65ED9954A1D}|DocumentReader.csproj|solutionrelative:components\\createoutputfile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{268FFFB4-EB1C-4D81-B7D6-B65ED9954A1D}|DocumentReader.csproj|c:\\users\\dwarf\\desktop\\programming\\git\\utils\\stringformater.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{268FFFB4-EB1C-4D81-B7D6-B65ED9954A1D}|DocumentReader.csproj|c:\\users\\dwarf\\desktop\\programming\\documentreader\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{268FFFB4-EB1C-4D81-B7D6-B65ED9954A1D}|DocumentReader.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{268FFFB4-EB1C-4D81-B7D6-B65ED9954A1D}|DocumentReader.csproj|c:\\users\\dwarf\\desktop\\programming\\documentreader\\components\\documentprocessorbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{268FFFB4-EB1C-4D81-B7D6-B65ED9954A1D}|DocumentReader.csproj|solutionrelative:components\\documentprocessorbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{268FFFB4-EB1C-4D81-B7D6-B65ED9954A1D}|DocumentReader.csproj|c:\\users\\dwarf\\desktop\\programming\\documentreader\\utils\\stringformater.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{268FFFB4-EB1C-4D81-B7D6-B65ED9954A1D}|DocumentReader.csproj|solutionrelative:utils\\stringformater.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -47,47 +51,62 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "LogUtility.cs",
+              "DocumentMoniker": "C:\\Users\\dwarf\\Desktop\\Programming\\DocumentReader\\Utils\\LogUtility.cs",
+              "RelativeDocumentMoniker": "Utils\\LogUtility.cs",
+              "ToolTip": "C:\\Users\\dwarf\\Desktop\\Programming\\DocumentReader\\Utils\\LogUtility.cs",
+              "RelativeToolTip": "Utils\\LogUtility.cs",
+              "ViewState": "AgIAACgAAAAAAAAAAAAkwEYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-17T04:39:36.018Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\dwarf\\Desktop\\Programming\\Git\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\dwarf\\Desktop\\Programming\\DocumentReader\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\dwarf\\Desktop\\Programming\\Git\\Program.cs",
+              "ToolTip": "C:\\Users\\dwarf\\Desktop\\Programming\\DocumentReader\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAAA8AAAAWAAAAAAAAAA==",
+              "ViewState": "AgIAABgAAAAAAAAAAIAxwBQAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-16T06:25:30.257Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "CreateOutputFile.cs",
-              "DocumentMoniker": "C:\\Users\\dwarf\\Desktop\\Programming\\Git\\Components\\CreateOutputFile.cs",
-              "RelativeDocumentMoniker": "Components\\CreateOutputFile.cs",
-              "ToolTip": "C:\\Users\\dwarf\\Desktop\\Programming\\Git\\Components\\CreateOutputFile.cs",
-              "RelativeToolTip": "Components\\CreateOutputFile.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAA4AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-16T12:37:09.097Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "TextDocumentProcessor.cs",
-              "DocumentMoniker": "C:\\Users\\dwarf\\Desktop\\Programming\\Git\\Components\\TextDocumentProcessor.cs",
-              "RelativeDocumentMoniker": "Components\\TextDocumentProcessor.cs",
-              "ToolTip": "C:\\Users\\dwarf\\Desktop\\Programming\\Git\\Components\\TextDocumentProcessor.cs",
-              "RelativeToolTip": "Components\\TextDocumentProcessor.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Title": "CreateOutputFile.cs",
+              "DocumentMoniker": "C:\\Users\\dwarf\\Desktop\\Programming\\DocumentReader\\Components\\CreateOutputFile.cs",
+              "RelativeDocumentMoniker": "Components\\CreateOutputFile.cs",
+              "ToolTip": "C:\\Users\\dwarf\\Desktop\\Programming\\DocumentReader\\Components\\CreateOutputFile.cs",
+              "RelativeToolTip": "Components\\CreateOutputFile.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAsAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-16T06:35:08.935Z"
+              "WhenOpened": "2025-08-16T12:37:09.097Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "TextDocumentProcessor.cs",
+              "DocumentMoniker": "C:\\Users\\dwarf\\Desktop\\Programming\\DocumentReader\\Components\\TextDocumentProcessor.cs",
+              "RelativeDocumentMoniker": "Components\\TextDocumentProcessor.cs",
+              "ToolTip": "C:\\Users\\dwarf\\Desktop\\Programming\\DocumentReader\\Components\\TextDocumentProcessor.cs",
+              "RelativeToolTip": "Components\\TextDocumentProcessor.cs",
+              "ViewState": "AgIAAFIAAAAAAAAAAAAWwGQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-16T06:35:08.935Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "DocumentProcessorBase.cs",
-              "DocumentMoniker": "C:\\Users\\dwarf\\Desktop\\Programming\\Git\\Components\\DocumentProcessorBase.cs",
+              "DocumentMoniker": "C:\\Users\\dwarf\\Desktop\\Programming\\DocumentReader\\Components\\DocumentProcessorBase.cs",
               "RelativeDocumentMoniker": "Components\\DocumentProcessorBase.cs",
-              "ToolTip": "C:\\Users\\dwarf\\Desktop\\Programming\\Git\\Components\\DocumentProcessorBase.cs",
+              "ToolTip": "C:\\Users\\dwarf\\Desktop\\Programming\\DocumentReader\\Components\\DocumentProcessorBase.cs",
               "RelativeToolTip": "Components\\DocumentProcessorBase.cs",
               "ViewState": "AgIAAAsAAAAAAAAAAAAcwBAAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -95,11 +114,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "StringFormater.cs",
-              "DocumentMoniker": "C:\\Users\\dwarf\\Desktop\\Programming\\Git\\Utils\\StringFormater.cs",
+              "DocumentMoniker": "C:\\Users\\dwarf\\Desktop\\Programming\\DocumentReader\\Utils\\StringFormater.cs",
               "RelativeDocumentMoniker": "Utils\\StringFormater.cs",
-              "ToolTip": "C:\\Users\\dwarf\\Desktop\\Programming\\Git\\Utils\\StringFormater.cs",
+              "ToolTip": "C:\\Users\\dwarf\\Desktop\\Programming\\DocumentReader\\Utils\\StringFormater.cs",
               "RelativeToolTip": "Utils\\StringFormater.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAqwAUAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",

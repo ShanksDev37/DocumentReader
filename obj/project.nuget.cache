@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "Nr57AHSlDZA=",
+  "dgSpecHash": "vZHxsAcDctg=",
   "success": true,
   "projectFilePath": "C:\\Users\\dwarf\\Desktop\\Programming\\DocumentReader\\DocumentReader.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\dwarf\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\dwarf\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
+    "C:\\Users\\dwarf\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
+    "C:\\Users\\dwarf\\.nuget\\packages\\system.runtime\\4.3.0\\system.runtime.4.3.0.nupkg.sha512"
+  ],
   "logs": []
 }

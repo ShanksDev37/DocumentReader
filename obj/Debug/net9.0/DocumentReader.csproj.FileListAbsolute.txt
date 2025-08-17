@@ -12,3 +12,4 @@ C:\Users\dwarf\Desktop\Programming\DocumentReader\obj\Debug\net9.0\refint\Docume
 C:\Users\dwarf\Desktop\Programming\DocumentReader\obj\Debug\net9.0\DocumentReader.pdb
 C:\Users\dwarf\Desktop\Programming\DocumentReader\obj\Debug\net9.0\DocumentReader.genruntimeconfig.cache
 C:\Users\dwarf\Desktop\Programming\DocumentReader\obj\Debug\net9.0\ref\DocumentReader.dll
+C:\Users\dwarf\Desktop\Programming\DocumentReader\obj\Debug\net9.0\DocumentReader.sourcelink.json
