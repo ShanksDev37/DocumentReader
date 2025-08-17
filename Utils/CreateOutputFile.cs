@@ -44,8 +44,6 @@ namespace DocumentReader.Utils
                 if (item == null)
                     continue;
 
-                // Display content in real-time for user feedback
-                Console.WriteLine(item);
                 // Write to output file
                 file.WriteLine(item);
             }

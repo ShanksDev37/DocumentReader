@@ -23,7 +23,7 @@ namespace DocumentReader.Utils
         /// • Returns null if input is invalid or processing fails
         /// • Output is lowercase, trimmed, and contains only alphanumeric characters and spaces
         /// </returns>
-        public static async Task<string?> ProcessStringArray(string[]? input)
+        public static string? ProcessStringArray(string[]? input)
         {
             var log = LogUtility.Current;
 
@@ -91,7 +91,7 @@ namespace DocumentReader.Utils
             }
 
             // Split on various whitespace characters to handle different text formats
-            count = input.Split(' ', '\t', '\n', '\r');
+            count = input.Trim().Split(' ', '\t', '\n', '\r');
             return count.Length;
         }
 
