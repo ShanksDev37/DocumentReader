@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <Folder Include="Interfaces\" />
+    <Folder Include="GUIElements\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,9 +1,9 @@
 ﻿using ConsoleInfo;
-using DocumentReader.Components;
 using System.Data;
 using System.Text.RegularExpressions;
+using DocumentReader.Core;
 
-namespace DocumentReader.Core
+namespace DocumentReader
 {
     /// <summary>
     /// Main program class providing console-based interface for document processing operations.
@@ -15,18 +15,21 @@ namespace DocumentReader.Core
         /// Current version identifier for the application.
         /// Used for version tracking and display in the console interface.
         /// </summary>
-        public static readonly string VERSION = "V02";
+        public static readonly string VERSION = "0.3";
+        public static readonly string SIGNATURE = "Created by Shannon King.";
+        public static readonly string COPYRIGHT = "Copyright: CC-BY 2025";
+
+
+        /// <summary>
+        /// Logging utility instance for consistent error and information logging throughout the application.
+        /// </summary>
+        private static readonly LogUtility log = LogUtility.Current;
 
         /// <summary>
         /// Singleton instance of the text document processor for handling file analysis.
         /// Reused across multiple processing operations during the application lifecycle.
         /// </summary>
-        private static TextDocumentProcessor processor = new();
-
-        /// <summary>
-        /// Logging utility instance for consistent error and information logging throughout the application.
-        /// </summary>
-        private static LogUtility log = LogUtility.Current;
+        private static DocReader docReader = new();
 
         /// <summary>
         /// Application entry point that initializes the console interface and begins user interaction.
@@ -36,13 +39,13 @@ namespace DocumentReader.Core
         {
             // Display application version for user reference
             Console.WriteLine($"Version: {VERSION}\n");
+            Console.WriteLine($"{SIGNATURE}\n");
+            Console.WriteLine($"{COPYRIGHT}\n");
 
             // Prompt user for file path input
             Console.WriteLine("Enter your books file path");
-            var userEntry = Console.ReadLine();
 
-            // Clean user input by removing quote characters that may interfere with path processing
-            userEntry = Regex.Replace(userEntry, "\"", "");
+            var userEntry = Console.ReadLine();
 
             // Begin validation and processing workflow
             ValidateInput(userEntry);
@@ -57,8 +60,22 @@ namespace DocumentReader.Core
         /// • Should be a complete file path including directory and filename
         /// • Example: "C:\Documents\textfile.txt"
         /// </param>
-        private static void ValidateInput(string userEntry)
+        private static void ValidateInput(string? userEntry)
         {
+            if (string.IsNullOrEmpty(userEntry) || string.IsNullOrWhiteSpace(userEntry))
+            {
+                log.LogMessage(LogUtility.MessageType.Error, "Invalid input detected.");
+                Console.WriteLine("Press any key to continue.");
+                Console.ReadKey();
+
+                Console.Clear();
+                Main();
+                return;
+            }
+
+            // Clean user input by removing quote characters that may interfere with path processing
+            userEntry = Regex.Replace(userEntry, "\"", "");
+
             // Verify the complete file path exists in the filesystem
             if (Path.Exists(userEntry) == false)
             {
@@ -84,6 +101,7 @@ namespace DocumentReader.Core
                 // Clear console and restart application for retry
                 Console.Clear();
                 Main();
+                return;
             }
 
             // Extract filename component for processing
@@ -97,6 +115,7 @@ namespace DocumentReader.Core
                 // Clear console and restart application for retry
                 Console.Clear();
                 Main();
+                return;
             }
 
             // All validation passed, proceed to document processing
@@ -117,7 +136,7 @@ namespace DocumentReader.Core
         /// • Guaranteed to be non-null and valid after validation
         /// • Example: "textfile.txt"
         /// </param>
-        private async static Task ProcessData(string filePath, string fileName)
+        private static async void ProcessData(string filePath, string fileName)
         {
             // Final safety check to ensure parameters are valid before processing
             if (string.IsNullOrEmpty(filePath) || string.IsNullOrEmpty(fileName))
@@ -125,8 +144,14 @@ namespace DocumentReader.Core
                 return;
             }
 
-            // Execute document processing asynchronously using the text processor
-            await processor.ProcessData(filePath, fileName);
+            await docReader.ValidateData(filePath, fileName);
+
+            Console.WriteLine("Press any key to continue.");
+            Console.ReadKey();
+
+            Console.Clear();
+            Main();
+            return;
         }
     }
 }

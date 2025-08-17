@@ -1,13 +1,14 @@
 ﻿using ConsoleInfo;
+using DocumentReader.Utils;
 
-namespace DocumentReader.Components
+namespace DocumentReader.Core
 {
     /// <summary>
     /// Abstract base class providing common file validation functionality for document processors.
     /// Defines supported file types and implements comprehensive file validation logic.
     /// Serves as foundation for specialized document processing classes.
     /// </summary>
-    public abstract class DocumentProcessorBase
+    public class DocReader
     {
         /// <summary>
         /// Enumeration defining the file types supported by the document processing system.
@@ -46,10 +47,8 @@ namespace DocumentReader.Components
         /// • True if file passes all validation checks and content is loaded
         /// • False if any validation step fails (logged with specific error details)
         /// </returns>
-        public bool ValidateData(string filePath, string fileName, out string[]? validatedFile)
+        public async Task<bool> ValidateData(string filePath, string fileName)
         {
-            validatedFile = null;
-
             // Combine path and filename to create full file path
             var joinedFile = $"{filePath}\\{fileName}";
 
@@ -86,12 +85,21 @@ namespace DocumentReader.Components
                 return false;
             }
 
-            // Load file content and verify it contains data
-            validatedFile = File.ReadAllLines(joinedFile);
-            if (validatedFile.Length == 0)
+            if (extention.Contains(SupportedFileTypes.txt.ToString()))
             {
-                LogUtility.Current.LogMessage(LogUtility.MessageType.Warning, $"No data found in file.");
-                return false;
+                // Load file content and verify it contains data
+                var validatedFile = File.ReadAllLines(joinedFile);
+                if (validatedFile.Length == 0)
+                {
+                    LogUtility.Current.LogMessage(LogUtility.MessageType.Warning, $"No data found in file.");
+                    return false;
+                }
+
+                await ProcessTextData.ProcessData(filePath, fileName, validatedFile);
+            }
+            else if (extention.Contains(SupportedFileTypes.csv.ToString()))
+            {
+                
             }
 
             // All validation checks passed successfully
