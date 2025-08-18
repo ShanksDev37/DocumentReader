@@ -24,7 +24,7 @@ namespace DocumentReader.Utils
         /// </summary>
         /// <param name="filePath">Directory path containing the file</param>
         /// <param name="fileName">Name of the file to process</param>
-        public static async Task ProcessData(string filePath, string fileName, string[] validFile)
+        public static async Task ProcessData(string filePath, string fileName, string[] validFile, int documentSize = 0)
         {
             var log = LogUtility.Current;
             log.LogMessage(LogUtility.MessageType.Log, "Started processing data.");
@@ -39,11 +39,18 @@ namespace DocumentReader.Utils
             var totalCharacters = StringFormatter.CharacterCount(validFile);
 
             // Clean and format text (remove special chars, normalize spacing, convert to lowercase)
-            var cleanedFile = StringFormatter.ProcessStringArray(validFile);
+            string cleanedFile = StringFormatter.ProcessStringArray(validFile).Result;
             if (cleanedFile == null)
             {
                 log.LogMessage(LogUtility.MessageType.Error, "Processed Text is null.");
                 return;
+            }
+
+            if (documentSize > 0)
+            {
+                log.LogMessage(LogUtility.MessageType.Log, "Generating Randomized Document");
+                var newDocument = StringFormatter.GenerateRandomizeDocument(cleanedFile, documentSize);
+                await CreateOutputFile.CreateFile(filePath, "Unit Tests", $"{documentSize}", "UnitTest.txt", newDocument);
             }
 
             log.LogMessage(LogUtility.MessageType.Log, "Creating Word Collection.");

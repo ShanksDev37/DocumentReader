@@ -1,6 +1,5 @@
 ﻿using ConsoleInfo;
 using System.Text.RegularExpressions;
-
 namespace DocumentReader.Utils
 {
     /// <summary>
@@ -9,6 +8,8 @@ namespace DocumentReader.Utils
     /// </summary>
     public static class StringFormatter
     {
+        public static readonly int TASKLIMIT = 500;
+
         /// <summary>
         /// Processes and cleans an array of strings by combining, sanitizing, and normalizing the text.
         /// Removes special characters, normalizes whitespace, and converts to lowercase for consistent analysis.
@@ -23,7 +24,7 @@ namespace DocumentReader.Utils
         /// • Returns null if input is invalid or processing fails
         /// • Output is lowercase, trimmed, and contains only alphanumeric characters and spaces
         /// </returns>
-        public static string? ProcessStringArray(string[]? input)
+        public static async Task<string?> ProcessStringArray(string[]? input)
         {
             var log = LogUtility.Current;
 
@@ -36,31 +37,103 @@ namespace DocumentReader.Utils
 
             // Combine all lines into single string with space separation
             string combinedValue = new("");
+
+            //Using a list over a hashset in the event, there are duplicate lines within a document.
+            var lineCollection = new List<string>();
+            var taskCollection = new List<Task<string>>();
+
+            //Process lines in batches of 10 thousand per thread.
+            var taskLimit = input.Length < TASKLIMIT ? input.Length : TASKLIMIT;
+            var startTaskLimit = taskLimit;
             for (var i = 0; i < input.Length; i++)
             {
-                // Add space between lines except for the last line
-                if (i != input.Length - 1)
+                lineCollection.Add(input[i]);
+                if (lineCollection.Count >= startTaskLimit)
                 {
-                    input[i] += " ";
-                }
+                    var task = JoinLinesSafely(lineCollection);
+                    taskCollection.Add(task);
+                    Task.Run(() => task);
 
-                combinedValue += input[i];
+                    var nextRound = i + taskLimit;
+                    if (nextRound > input.Length)
+                    {
+                        nextRound -= input.Length;
+                    }
+
+                    startTaskLimit = nextRound;
+                    lineCollection.Clear();
+                }
+            }
+
+            await Task.WhenAll(taskCollection);
+
+            foreach (var line in taskCollection)
+            {
+                combinedValue += line.Result;
             }
 
             // Verify combined string has content
             if (combinedValue.Length <= 0)
             {
-                log.LogMessage(LogUtility.MessageType.Error, "data is not valid.");
+                log.LogMessage(LogUtility.MessageType.Error, "Internal Error: No valid data found.");
                 return null;
             }
 
-            // Remove all non-alphanumeric characters except spaces (preserves word boundaries)
-            combinedValue = Regex.Replace(combinedValue, @"[^0-9a-zA-Z ]+", "");
-            // Normalize multiple spaces to single spaces for consistent word separation
-            combinedValue = Regex.Replace(combinedValue, @"\s+", " ");
-
             // Return cleaned, lowercase, trimmed text ready for analysis
             return combinedValue.ToLower().Trim();
+        }
+
+        private async static Task<string> JoinLinesSafely(List<string> input)
+        {
+            string combinedInput = new("");
+            var stringArray = input.ToArray();
+            for (var i = 0; i < stringArray.Length; i++)
+            {
+                // Add space between lines except for the last line
+                if (i != stringArray.Length)
+                {
+                    stringArray[i] += " ";
+                }
+
+                combinedInput += stringArray[i];
+            }
+
+
+            // Remove all non-alphanumeric characters except spaces (preserves word boundaries)
+            combinedInput = Regex.Replace(combinedInput, @"[^0-9a-zA-Z ]+", "");
+            // Normalize multiple spaces to single spaces for consistent word separation
+            combinedInput = Regex.Replace(combinedInput, @"\s+", " ");
+            return combinedInput;
+        }
+
+        public static string[] GenerateRandomizeDocument(string input, int totalSize)
+        {
+            var sizeInKB = totalSize * 1024;
+            var random = new Random();
+            var randomizer = new Random();
+            var wordList = new List<string>();
+            string tempWordList = new("");
+
+            var _ = WordCount(input, out var wordLibrary);
+
+            for (var i = 0; i < sizeInKB;)
+            {
+                var wordToAdd = wordLibrary[random.Next(wordLibrary.Length)];
+                tempWordList += $"{wordToAdd} ";
+
+                //Build random sentences
+                if (randomizer.Next(100) <= 5)
+                {
+                    tempWordList.Trim();
+                    wordList.Add(tempWordList);
+                    tempWordList = "";
+                }
+
+                //Build until we reach around the desired size.
+                i += wordToAdd.Length;
+            }
+
+            return wordList.ToArray();
         }
 
         /// <summary>

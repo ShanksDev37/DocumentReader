@@ -47,7 +47,7 @@ namespace DocumentReader.Core
         /// • True if file passes all validation checks and content is loaded
         /// • False if any validation step fails (logged with specific error details)
         /// </returns>
-        public async Task<bool> ValidateData(string filePath, string fileName)
+        public async Task<bool> ValidateData(string filePath, string fileName, int documentSize = 0)
         {
             // Combine path and filename to create full file path
             var joinedFile = $"{filePath}\\{fileName}";
@@ -95,7 +95,7 @@ namespace DocumentReader.Core
                     return false;
                 }
 
-                await ProcessTextData.ProcessData(filePath, fileName, validatedFile);
+                await ProcessTextData.ProcessData(filePath, fileName, validatedFile, documentSize);
             }
             else if (extention.Contains(SupportedFileTypes.csv.ToString()))
             {

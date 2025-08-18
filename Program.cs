@@ -1,7 +1,8 @@
 ﻿using ConsoleInfo;
-using System.Data;
 using System.Text.RegularExpressions;
 using DocumentReader.Core;
+using System.Reflection;
+using System.Diagnostics;
 
 namespace DocumentReader
 {
@@ -15,10 +16,11 @@ namespace DocumentReader
         /// Current version identifier for the application.
         /// Used for version tracking and display in the console interface.
         /// </summary>
-        public static readonly string VERSION = "0.3";
+        public static readonly string VERSION = "0.4";
         public static readonly string SIGNATURE = "Created by Shannon King.";
         public static readonly string COPYRIGHT = "Copyright: CC-BY 2025";
 
+        private static readonly string debugKey = "DEBUG";
 
         /// <summary>
         /// Logging utility instance for consistent error and information logging throughout the application.
@@ -48,7 +50,48 @@ namespace DocumentReader
             var userEntry = Console.ReadLine();
 
             // Begin validation and processing workflow
-            ValidateInput(userEntry);
+            ValidateInput(userEntry, false, 0);
+        }
+
+        public static void DebugMain()
+        {
+            Console.Clear();
+
+            // Display application version for user reference
+            Console.WriteLine($"Version: {VERSION}\n");
+            Console.WriteLine($"{debugKey}\n");
+
+            Console.WriteLine("Enter the file path.");
+            var userEntry = Console.ReadLine();
+            Console.WriteLine("Generate a word soup document?");
+            var wordSoup = Console.ReadKey();
+            int soupSize = 0;
+            if (wordSoup.Key == ConsoleKey.Y)
+            {
+                Console.WriteLine("\nHow large? specify in (numbers only), each number represents 1KB (AKA 512 characters).");
+                var goodSoup = Console.ReadLine();
+
+                try
+                {
+                    soupSize = Int32.Parse(goodSoup);
+
+                    if (soupSize > int.MaxValue)
+                        throw new();
+
+                    if (soupSize <= 0)
+                        throw new();
+
+                    ValidateInput(userEntry, true, soupSize);
+                }
+                catch
+                {
+                    Console.WriteLine("It puts the proper size in the console, or it gets the hose again.");
+                    DebugMain();
+                    return;
+                }
+            }
+
+            Console.WriteLine("Performing operation");
         }
 
         /// <summary>
@@ -60,8 +103,45 @@ namespace DocumentReader
         /// • Should be a complete file path including directory and filename
         /// • Example: "C:\Documents\textfile.txt"
         /// </param>
-        private static void ValidateInput(string? userEntry)
+        private static void ValidateInput(string? userEntry, bool generateRandomized, int size)
         {
+            if (userEntry == debugKey)
+            {
+                DebugMain();
+                return;
+            }
+
+            string directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            if (directory != null)
+            {
+                //unit tests
+                if (userEntry.Contains("64"))
+                {
+                    var path = Path.Combine(directory, "SampleData", "64UnitTest.txt");
+                    userEntry = path;
+                }
+                else if (userEntry.Contains("128"))
+                {
+                    var path = Path.Combine(directory, "SampleData", "128UnitTest.txt");
+                    userEntry = path;
+                }
+                else if (userEntry.Contains("256"))
+                {
+                    var path = Path.Combine(directory, "SampleData", "256UnitTest.txt");
+                    userEntry = path;
+                }
+                else if (userEntry.Contains("512"))
+                {
+                    var path = Path.Combine(directory, "SampleData", "512UnitTest.txt");
+                    userEntry = path;
+                }
+                else if (userEntry.Contains("1024"))
+                {
+                    var path = Path.Combine(directory, "SampleData", "1024UnitTest.txt");
+                    userEntry = path;
+                }
+            }
+
             if (string.IsNullOrEmpty(userEntry) || string.IsNullOrWhiteSpace(userEntry))
             {
                 log.LogMessage(LogUtility.MessageType.Error, "Invalid input detected.");
@@ -119,6 +199,12 @@ namespace DocumentReader
             }
 
             // All validation passed, proceed to document processing
+            if (generateRandomized)
+            {
+                ProcessData(filePath, fileName, size);
+                return;
+            }
+
             ProcessData(filePath, fileName);
         }
 
@@ -136,7 +222,7 @@ namespace DocumentReader
         /// • Guaranteed to be non-null and valid after validation
         /// • Example: "textfile.txt"
         /// </param>
-        private static async void ProcessData(string filePath, string fileName)
+        private static async void ProcessData(string filePath, string fileName, int documentSize = 0)
         {
             // Final safety check to ensure parameters are valid before processing
             if (string.IsNullOrEmpty(filePath) || string.IsNullOrEmpty(fileName))
@@ -144,7 +230,8 @@ namespace DocumentReader
                 return;
             }
 
-            await docReader.ValidateData(filePath, fileName);
+            await docReader.ValidateData(filePath, fileName, documentSize);
+            Process.Start("explorer.exe", filePath);
 
             Console.WriteLine("Press any key to continue.");
             Console.ReadKey();
